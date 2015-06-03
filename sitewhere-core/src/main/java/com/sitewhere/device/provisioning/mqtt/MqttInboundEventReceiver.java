@@ -78,33 +78,34 @@ public class MqttInboundEventReceiver extends LifecycleComponent implements IInb
 	 */
 	@Override
 	public void start() throws SiteWhereException {
-		this.mqtt = new MQTT();
-		try {
-			mqtt.setHost(getHostname(), getPort());
-		} catch (URISyntaxException e) {
-			throw new SiteWhereException("Invalid hostname for MQTT server.", e);
-		}
-		LOGGER.info("Receiver connecting to MQTT broker at '" + getHostname() + ":" + getPort() + "'...");
-		connection = mqtt.blockingConnection();
-		try {
-			connection.connect();
-		} catch (Exception e) {
-			throw new SiteWhereException("Unable to establish MQTT connection.", e);
-		}
-		LOGGER.info("Receiver connected to MQTT broker.");
-
-		// Subscribe to chosen topic.
-		Topic[] topics = { new Topic(getTopic(), QoS.AT_LEAST_ONCE) };
-		try {
-			connection.subscribe(topics);
-			LOGGER.info("Subscribed to events on MQTT topic: " + getTopic());
-		} catch (Exception e) {
-			throw new SiteWhereException("Exception while attempting to subscribe to MQTT topic: "
-					+ getTopic(), e);
-		}
-
-		// Handle message processing in separate thread.
-		executor.execute(new MqttSubscriptionProcessor());
+			System.out.print("mqtt 接受数据");
+//		this.mqtt = new MQTT();
+//		try {
+//			mqtt.setHost(getHostname(), getPort());
+//		} catch (URISyntaxException e) {
+//			throw new SiteWhereException("Invalid hostname for MQTT server.", e);
+//		}
+//		LOGGER.info("Receiver connecting to MQTT broker at '" + getHostname() + ":" + getPort() + "'...");
+//		connection = mqtt.blockingConnection();
+//		try {
+//			connection.connect();
+//		} catch (Exception e) {
+//			throw new SiteWhereException("Unable to establish MQTT connection.", e);
+//		}
+//		LOGGER.info("Receiver connected to MQTT broker.");
+//
+//		// Subscribe to chosen topic.
+//		Topic[] topics = { new Topic(getTopic(), QoS.AT_LEAST_ONCE) };
+//		try {
+//			connection.subscribe(topics);
+//			LOGGER.info("Subscribed to events on MQTT topic: " + getTopic());
+//		} catch (Exception e) {
+//			throw new SiteWhereException("Exception while attempting to subscribe to MQTT topic: "
+//					+ getTopic(), e);
+//		}
+//
+//		// Handle message processing in separate thread.
+//		executor.execute(new MqttSubscriptionProcessor());
 	}
 
 	/*
